@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Same Pot Kitchen">
+  <rect width="64" height="64" rx="14" fill="#12121a"/>
+  <rect x="9"  y="31" width="7" height="6" rx="3" fill="#e8734a"/>
+  <rect x="48" y="31" width="7" height="6" rx="3" fill="#e8734a"/>
+  <path d="M15 28 H49 L46.5 44 Q46 50 40.5 50 H23.5 Q18 50 17.5 44 Z" fill="#e8734a"/>
+  <rect x="9"  y="21" width="46" height="6" rx="3" fill="#f2efe9"/>
+  <rect x="28" y="15" width="8"  height="7" rx="3" fill="#f2efe9"/>
+</svg>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ==== EDIT ME: page metadata ==================================== -->
+<title>Same Pot Kitchen — Coming Soon</title>
+<meta name="description" content="Something's cooking. Coming soon.">
+<meta name="theme-color" content="#0b0b0f">
+<link rel="canonical" href="https://samepotkitchen.com/">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://samepotkitchen.com/">
+<meta property="og:title" content="Same Pot Kitchen">
+<meta property="og:description" content="Something's cooking. Coming soon.">
+<!-- <meta property="og:image" content="https://samepotkitchen.com/og.png"> -->
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- Font pairing: Fraunces (display serif) + Inter (UI sans).
+     Delete these two lines to go fully dependency-free; the CSS
+     falls back to system serif/sans automatically. -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600&family=Inter:wght@400;500&display=swap">
+
+<style>
+  /* ---- tokens ------------------------------------------------- */
+  :root {
+    --bg:        #0b0b0f;
+    --ink:       #f2efe9;
+    --ink-dim:   #9a968f;
+    --line:      rgba(242, 239, 233, 0.14);
+    --accent:    #e8734a;   /* warm ember */
+    --accent-2:  #3f6f6a;   /* deep teal   */
+
+    --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --step: clamp(1rem, 0.6rem + 1.6vw, 1.5rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 5vw, 4rem);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---- background: two slow-drifting colour fields + film grain -- */
+  .bg {
+    position: fixed;
+    inset: -25%;
+    z-index: -2;
+    background:
+      radial-gradient(38% 42% at 22% 28%, color-mix(in oklab, var(--accent) 40%, transparent), transparent 70%),
+      radial-gradient(44% 46% at 78% 72%, color-mix(in oklab, var(--accent-2) 45%, transparent), transparent 70%);
+    filter: blur(70px) saturate(115%);
+    opacity: 0.55;
+    animation: drift 28s ease-in-out infinite alternate;
+  }
+
+  /* grain overlay — SVG turbulence, no image file needed */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @keyframes drift {
+    from { transform: translate3d(-3%, -2%, 0) scale(1);    }
+    to   { transform: translate3d( 3%,  2%, 0) scale(1.12); }
+  }
+
+  /* ---- layout ---------------------------------------------------- */
+  main {
+    width: min(58ch, 100%);
+    text-align: center;
+    animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+  /* stagger the children slightly */
+  main > * { animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  main > :nth-child(1) { animation-delay: 0.05s; }
+  main > :nth-child(2) { animation-delay: 0.15s; }
+  main > :nth-child(3) { animation-delay: 0.25s; }
+  main > :nth-child(4) { animation-delay: 0.35s; }
+  main > :nth-child(5) { animation-delay: 0.45s; }
+  main > :nth-child(6) { animation-delay: 0.55s; }
+
+  .eyebrow {
+    margin: 0 0 1.25rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 6px; height: 6px;
+    margin-right: 0.75em;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: 0.15em;
+    animation: pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1;   transform: scale(1);   }
+    50%      { opacity: 0.35; transform: scale(0.8); }
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(2.75rem, 1.5rem + 6vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 120;
+    text-wrap: balance;   /* keeps the three words from stranding one alone */
+  }
+
+  .tagline {
+    margin: 1.1rem auto 0;
+    max-width: 34ch;
+    color: var(--ink-dim);
+    font-size: var(--step);
+  }
+
+  /* ---- countdown -------------------------------------------------- */
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.75rem, 3vw, 2rem);
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .countdown li {
+    min-width: 3.5rem;
+  }
+  .countdown b {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.6rem, 1rem + 2.4vw, 2.6rem);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .countdown span {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .countdown[hidden] { display: none; }
+
+  /* ---- email capture ---------------------------------------------- */
+  form {
+    display: flex;
+    gap: 0.5rem;
+    margin: 2.5rem auto 0;
+    max-width: 26rem;
+  }
+  input[type="email"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.85rem 1rem;
+    color: var(--ink);
+    font: inherit;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  input[type="email"]::placeholder { color: var(--ink-dim); }
+  input[type="email"]:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.07);
+  }
+  button {
+    flex: 0 0 auto;
+    padding: 0.85rem 1.4rem;
+    color: #16110e;
+    font: inherit;
+    font-weight: 500;
+    background: var(--ink);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s;
+  }
+  button:hover  { background: var(--accent); color: #fff; }
+  button:active { transform: translateY(1px); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .form-note {
+    margin: 0.9rem 0 0;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+    min-height: 1.2em;
+  }
+
+  /* ---- socials ----------------------------------------------------- */
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 1.75rem;
+    margin: 3rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .socials a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .socials a:hover,
+  .socials a:focus-visible { color: var(--ink); }
+
+  footer {
+    margin: 3.5rem 0 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: color-mix(in oklab, var(--ink-dim) 65%, transparent);
+  }
+
+  /* ---- small screens ------------------------------------------------ */
+  @media (max-width: 30rem) {
+    form { flex-direction: column; }
+    input[type="email"], button { width: 100%; }
+    .countdown { gap: 0.6rem; }
+    .socials { gap: 1.1rem; flex-wrap: wrap; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main>
+    <p class="eyebrow">Coming soon</p>
+
+    <!-- ==== EDIT ME: brand + tagline ============================== -->
+    <h1>Same Pot Kitchen</h1>
+    <p class="tagline">Something&rsquo;s cooking. Coming soon.</p>
+
+    <!-- ==== EDIT ME: launch date in data-launch (ISO 8601) ========
+         Use an absolute timestamp with an offset, e.g.
+         2026-10-01T09:00:00+02:00. The list hides itself once the
+         date passes, so it degrades gracefully if you forget it. -->
+    <ul class="countdown" id="countdown" data-launch="2026-10-01T09:00:00+02:00" aria-label="Time until launch">
+      <li><b data-unit="days">--</b><span>Days</span></li>
+      <li><b data-unit="hours">--</b><span>Hours</span></li>
+      <li><b data-unit="minutes">--</b><span>Minutes</span></li>
+      <li><b data-unit="seconds">--</b><span>Seconds</span></li>
+    </ul>
+
+    <!-- ==== EDIT ME: swap the action for your Formspree / Mailchimp
+         endpoint, e.g. https://formspree.io/f/abcdwxyz ============= -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <label for="email" class="visually-hidden" hidden>Email address</label>
+      <input id="email" type="email" name="email" placeholder="you@example.com"
+             autocomplete="email" required aria-label="Email address">
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="form-note" id="formNote">No spam — one email when we open the doors.</p>
+
+    <!-- ==== EDIT ME: real profile URLs ============================ -->
+    <ul class="socials">
+      <li><a href="#" rel="me noopener">Instagram</a></li>
+      <li><a href="#" rel="me noopener">X</a></li>
+      <li><a href="mailto:hello@samepotkitchen.com">Email</a></li>
+    </ul>
+
+    <footer>&copy; <span id="year">2026</span> Same Pot Kitchen</footer>
+  </main>
+
+<script>
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Countdown — reads the ISO date from data-launch on #countdown
+  (function () {
+    var el = document.getElementById('countdown');
+    var target = new Date(el.dataset.launch).getTime();
+    if (isNaN(target)) { el.hidden = true; return; }
+
+    var fields = {};
+    el.querySelectorAll('[data-unit]').forEach(function (n) {
+      fields[n.dataset.unit] = n;
+    });
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      var left = target - Date.now();
+      if (left <= 0) { el.hidden = true; clearInterval(timer); return; }
+      var s = Math.floor(left / 1000);
+      fields.days.textContent    = Math.floor(s / 86400);
+      fields.hours.textContent   = pad(Math.floor(s / 3600) % 24);
+      fields.minutes.textContent = pad(Math.floor(s / 60) % 60);
+      fields.seconds.textContent = pad(s % 60);
+    }
+
+    tick();
+    var timer = setInterval(tick, 1000);
+  })();
+
+  // Guard: until a real endpoint is wired up, don't post to the placeholder
+  (function () {
+    var form = document.querySelector('form');
+    var note = document.getElementById('formNote');
+    form.addEventListener('submit', function (e) {
+      if (form.action.indexOf('YOUR_FORM_ID') === -1) return;   // real endpoint → let it through
+      e.preventDefault();
+      note.textContent = 'Signup isn’t wired up yet — check back shortly.';
+    });
+  })();
+</script>
+</body>
+</html>
