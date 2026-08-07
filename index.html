@@ -39,8 +39,6 @@
 
     --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
     --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-    --step: clamp(1rem, 0.6rem + 1.6vw, 1.5rem);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -107,10 +105,7 @@
   main > * { animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
   main > :nth-child(1) { animation-delay: 0.05s; }
   main > :nth-child(2) { animation-delay: 0.15s; }
-  main > :nth-child(3) { animation-delay: 0.25s; }
-  main > :nth-child(4) { animation-delay: 0.35s; }
-  main > :nth-child(5) { animation-delay: 0.45s; }
-  main > :nth-child(6) { animation-delay: 0.55s; }
+  main > :nth-child(3) { animation-delay: 0.30s; }
 
   .eyebrow {
     margin: 0 0 1.25rem;
@@ -145,123 +140,11 @@
     text-wrap: balance;   /* keeps the three words from stranding one alone */
   }
 
-  .tagline {
-    margin: 1.1rem auto 0;
-    max-width: 34ch;
-    color: var(--ink-dim);
-    font-size: var(--step);
-  }
-
-  /* ---- countdown -------------------------------------------------- */
-  .countdown {
-    display: flex;
-    justify-content: center;
-    gap: clamp(0.75rem, 3vw, 2rem);
-    margin: 2.5rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .countdown li {
-    min-width: 3.5rem;
-  }
-  .countdown b {
-    display: block;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(1.6rem, 1rem + 2.4vw, 2.6rem);
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-  .countdown span {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink-dim);
-  }
-  .countdown[hidden] { display: none; }
-
-  /* ---- email capture ---------------------------------------------- */
-  form {
-    display: flex;
-    gap: 0.5rem;
-    margin: 2.5rem auto 0;
-    max-width: 26rem;
-  }
-  input[type="email"] {
-    flex: 1 1 auto;
-    min-width: 0;
-    padding: 0.85rem 1rem;
-    color: var(--ink);
-    font: inherit;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  input[type="email"]::placeholder { color: var(--ink-dim); }
-  input[type="email"]:focus-visible {
-    outline: none;
-    border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.07);
-  }
-  button {
-    flex: 0 0 auto;
-    padding: 0.85rem 1.4rem;
-    color: #16110e;
-    font: inherit;
-    font-weight: 500;
-    background: var(--ink);
-    border: 1px solid transparent;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: transform 0.15s, background 0.2s;
-  }
-  button:hover  { background: var(--accent); color: #fff; }
-  button:active { transform: translateY(1px); }
-  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-
-  .form-note {
-    margin: 0.9rem 0 0;
-    font-size: 0.8rem;
-    color: var(--ink-dim);
-    min-height: 1.2em;
-  }
-
-  /* ---- socials ----------------------------------------------------- */
-  .socials {
-    display: flex;
-    justify-content: center;
-    gap: 1.75rem;
-    margin: 3rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .socials a {
-    color: var(--ink-dim);
-    text-decoration: none;
-    font-size: 0.78rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .socials a:hover,
-  .socials a:focus-visible { color: var(--ink); }
-
   footer {
     margin: 3.5rem 0 0;
     font-size: 0.72rem;
     letter-spacing: 0.08em;
     color: color-mix(in oklab, var(--ink-dim) 65%, transparent);
-  }
-
-  /* ---- small screens ------------------------------------------------ */
-  @media (max-width: 30rem) {
-    form { flex-direction: column; }
-    input[type="email"], button { width: 100%; }
-    .countdown { gap: 0.6rem; }
-    .socials { gap: 1.1rem; flex-wrap: wrap; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -280,82 +163,14 @@
   <main>
     <p class="eyebrow">Coming soon</p>
 
-    <!-- ==== EDIT ME: brand + tagline ============================== -->
+    <!-- ==== EDIT ME: brand ======================================== -->
     <h1>Same Pot Kitchen</h1>
-    <p class="tagline">Something&rsquo;s cooking. Coming soon.</p>
-
-    <!-- ==== EDIT ME: launch date in data-launch (ISO 8601) ========
-         Use an absolute timestamp with an offset, e.g.
-         2026-10-01T09:00:00+02:00. The list hides itself once the
-         date passes, so it degrades gracefully if you forget it. -->
-    <ul class="countdown" id="countdown" data-launch="2026-10-01T09:00:00+02:00" aria-label="Time until launch">
-      <li><b data-unit="days">--</b><span>Days</span></li>
-      <li><b data-unit="hours">--</b><span>Hours</span></li>
-      <li><b data-unit="minutes">--</b><span>Minutes</span></li>
-      <li><b data-unit="seconds">--</b><span>Seconds</span></li>
-    </ul>
-
-    <!-- ==== EDIT ME: swap the action for your Formspree / Mailchimp
-         endpoint, e.g. https://formspree.io/f/abcdwxyz ============= -->
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <label for="email" class="visually-hidden" hidden>Email address</label>
-      <input id="email" type="email" name="email" placeholder="you@example.com"
-             autocomplete="email" required aria-label="Email address">
-      <button type="submit">Notify me</button>
-    </form>
-    <p class="form-note" id="formNote">No spam — one email when we open the doors.</p>
-
-    <!-- ==== EDIT ME: real profile URLs ============================ -->
-    <ul class="socials">
-      <li><a href="#" rel="me noopener">Instagram</a></li>
-      <li><a href="#" rel="me noopener">X</a></li>
-      <li><a href="mailto:hello@samepotkitchen.com">Email</a></li>
-    </ul>
 
     <footer>&copy; <span id="year">2026</span> Same Pot Kitchen</footer>
   </main>
 
 <script>
-  // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Countdown — reads the ISO date from data-launch on #countdown
-  (function () {
-    var el = document.getElementById('countdown');
-    var target = new Date(el.dataset.launch).getTime();
-    if (isNaN(target)) { el.hidden = true; return; }
-
-    var fields = {};
-    el.querySelectorAll('[data-unit]').forEach(function (n) {
-      fields[n.dataset.unit] = n;
-    });
-
-    function pad(n) { return String(n).padStart(2, '0'); }
-
-    function tick() {
-      var left = target - Date.now();
-      if (left <= 0) { el.hidden = true; clearInterval(timer); return; }
-      var s = Math.floor(left / 1000);
-      fields.days.textContent    = Math.floor(s / 86400);
-      fields.hours.textContent   = pad(Math.floor(s / 3600) % 24);
-      fields.minutes.textContent = pad(Math.floor(s / 60) % 60);
-      fields.seconds.textContent = pad(s % 60);
-    }
-
-    tick();
-    var timer = setInterval(tick, 1000);
-  })();
-
-  // Guard: until a real endpoint is wired up, don't post to the placeholder
-  (function () {
-    var form = document.querySelector('form');
-    var note = document.getElementById('formNote');
-    form.addEventListener('submit', function (e) {
-      if (form.action.indexOf('YOUR_FORM_ID') === -1) return;   // real endpoint → let it through
-      e.preventDefault();
-      note.textContent = 'Signup isn’t wired up yet — check back shortly.';
-    });
-  })();
 </script>
 </body>
 </html>
